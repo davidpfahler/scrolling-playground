@@ -1,0 +1,82 @@
+{
+  "name": "scrolling-playground",
+  "version": "0.0.0-semantically-released",
+  "description": "A simple development process for reuseable react components written in ES6.",
+  "main": "index.jsx",
+  "config": {
+    "lrport": 35729,
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "scripts": {
+    "test": "babel-node test | tap-spec",
+    "clean": "rm -rf example/build.js && rm -rf dist && mkdir dist",
+    "prebuild": "npm run clean && browserify lib/worker.js > example/worker.js",
+    "build": "browserify example/app.jsx > example/build.js",
+    "watch": "onchange 'index.jsx' -- npm test",
+    "watchify": "watchify example/app.jsx -o example/build.js",
+    "livereload": "lrhs -d example -b -w index.html,build.js -l $npm_package_config_lrport",
+    "open": "opener http://$npm_package_config_host:$npm_package_config_port/index.html",
+    "serve": "npm run build && parallelshell 'npm run watch -s' 'npm run watchify -s' 'npm run livereload -s' 'npm run open -s'",
+    "predist": "npm run clean",
+    "dist": "babel index.jsx > dist/index.js",
+    "prepublish": "npm run dist && semantic-release pre",
+    "postpublish": "semantic-release post"
+  },
+  "author": "David Pfahler <david@excellenteasy.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^4.3.0",
+    "babelify": "^5.0.3",
+    "browserify": "^9.0.3",
+    "lr-http-server": "^0.1.1",
+    "onchange": "^1.0.0",
+    "opener": "^1.4.0",
+    "parallelshell": "^1.0.4",
+    "semantic-release": "^3.0.2",
+    "serve-static": "^1.9.1",
+    "tap-spec": "^2.2.1",
+    "tape": "^3.5.0",
+    "watchify": "^2.3.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "peerDependencies": {
+    "react": "^0.12.2"
+  },
+  "engines": {
+    "iojs": "^1",
+    "node": "^0.10",
+    "npm": "^2"
+  },
+  "dependencies": {
+    "iscroll": "^5.1.3",
+    "lodash": "^3.3.1",
+    "moment": "^2.9.0",
+    "node-cache": "^1.1.0",
+    "pouchdb": "^3.3.1",
+    "pouchdb-load": "^1.3.2",
+    "react-infinite": "^0.2.4",
+    "react-infinity": "^1.1.2",
+    "react-tile": "^1.0.1"
+  },
+  "homepage": "https://github.com/excellenteasy/react-component.git",
+  "keywords": [
+    "react",
+    "component",
+    "reuseable",
+    "es6",
+    "jsx",
+    "browserify"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/excellenteasy/react-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/excellenteasy/react-component/issues"
+  }
+}
