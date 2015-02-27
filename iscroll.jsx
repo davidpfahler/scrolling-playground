@@ -33,7 +33,7 @@ const scroller = {
   getInitialState() {
     return {
       start: 0,
-      count: 30
+      count: 10
     }
   },
   requestData(start, count) {
@@ -49,7 +49,7 @@ const scroller = {
     that.scroller = new IScroll('.wrapper', {
       infiniteElements: '.scroller .row',
       dataset: that.requestData,
-      cacheSize: 50
+      cacheSize: 20
     })
   },
 
@@ -101,8 +101,7 @@ const scroller = {
         opts.backgroundColor = '#55ACEE'
         opts.bg = <ImageWorker
           loadingBlobUrl={that.loadingBlobUrl}
-          url={'img/bg/twitter.png'}
-          id={item.id} />
+          url={'img/bg/twitter.png'} />
         // opts.backgroundImage = 'url(img/bg/twitter.png)'
         opts.barBackground = '#e1e8ed'
         opts.bar = opts.created_at
