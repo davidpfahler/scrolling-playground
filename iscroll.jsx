@@ -27,24 +27,34 @@ const scroller = {
   },
 
   componentWillMount() {
+
+    console.log('scroller will mount')
+
     this.getLoadingBlobUrl()
   },
 
   getInitialState() {
     return {
       start: 0,
-      count: 10
+      count: 20
     }
   },
   requestData(start, count) {
+
+    console.log('request Data')
+
     this.setState({
       start: start,
-      count: count
+      count: count,
+      scrollerActive: true
     })
     return null
   },
 
   componentDidMount() {
+
+    console.log('scroller did mount')
+
     let that = this
     that.scroller = new IScroll('.wrapper', {
       infiniteElements: '.scroller .row',
@@ -54,6 +64,9 @@ const scroller = {
   },
 
   componentWillUnmount() {
+
+    console.log('component did unmount')
+
     this.scroller.destroy()
   },
 
@@ -99,9 +112,12 @@ const scroller = {
       },
       'twitter': function(item, opts) {
         opts.backgroundColor = '#55ACEE'
-        opts.bg = <ImageWorker
-          loadingBlobUrl={that.loadingBlobUrl}
-          url={'img/bg/twitter.png'} />
+        if (that.state.scrollerActive) {
+          opts.bg = <ImageWorker
+            loadingBlobUrl={that.loadingBlobUrl}
+            url={'img/bg/twitter.png'}
+            key={item.id} />
+        }
         // opts.backgroundImage = 'url(img/bg/twitter.png)'
         opts.barBackground = '#e1e8ed'
         opts.bar = opts.created_at
@@ -245,7 +261,6 @@ const scroller = {
         </div>
       )
     })
-
 
     return (
       <div className="wrapper" style={wrapperStyles}>

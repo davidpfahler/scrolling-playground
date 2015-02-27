@@ -13,7 +13,7 @@ const imageWorker = {
 
   updateBlob(e) {
 
-    console.log(`message received for image ${e.data.url}`)
+    console.log(`iamgeworker: message received for image ${e.data.url}`)
 
     if (e.data.url !== this.props.url) { return }
     if (e.data.err) {
@@ -32,14 +32,12 @@ const imageWorker = {
     return false
   },
 
-  componentWillMount() {
-
-    console.log('will mount')
+  componentDidMount() {
 
     if (this.props.url) {
       this.worker = worker
 
-      // console.log(`register message event listener`)
+      console.log('imageworker: did mount - register message event listener')
 
       this.worker.addEventListener('message', this.updateBlob, false)
       this.postMessage()
@@ -54,13 +52,9 @@ const imageWorker = {
 
   componentWillUnmount() {
 
-    console.log(`deregister message event listener`)
+    console.log('imageworker: will unmount - deregister message event listener')
 
-    this.worker.removeEventListener('message', this.updateBlob)
-  },
-
-  componentDidUnmount() {
-    console.log('unmount')
+    this.worker.removeEventListener('message', this.updateBlob, false)
   },
 
   propTypes: {
